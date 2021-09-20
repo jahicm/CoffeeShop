@@ -44,6 +44,7 @@ public class OrderEntry {
 	public static int createOrderId() {
 		return ++orderId;
 	}
+
 	public static int getOrderId() {
 		return orderId;
 	}

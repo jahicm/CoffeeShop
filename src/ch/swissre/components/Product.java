@@ -1,6 +1,8 @@
 /*Class Product represents single product from the menu. It is used for both , main and extras products.*/
 package ch.swissre.components;
 
+import ch.swissre.interfaces.Clonable;
+
 public class Product implements Clonable {
 
 	private int productId;
@@ -10,8 +12,10 @@ public class Product implements Clonable {
 	private boolean hasExtras;
 	private boolean isExtras;
 	private boolean extrasAdded;
+	private boolean isBeverage;
 
-	public Product(int productId, String productName, String size, double price, boolean hasExtras, boolean isExtras) {
+	public Product(int productId, String productName, String size, double price, boolean hasExtras, boolean isExtras,
+			boolean isBeverage) {
 		super();
 		this.productId = productId;
 		this.productName = productName;
@@ -20,6 +24,8 @@ public class Product implements Clonable {
 		this.hasExtras = hasExtras;
 		this.isExtras = isExtras;
 		this.extrasAdded = false;
+		this.isBeverage = isBeverage;
+
 	}
 
 	public int getProductId() {
@@ -99,13 +105,22 @@ public class Product implements Clonable {
 	public void setExtrasAdded(boolean extrasAdded) {
 		this.extrasAdded = extrasAdded;
 	}
+
 	@Override
+	/*
+	 * Deep copy the master instance of Product so that cloned copy is used for changes.
+	 */
 	public Object clone() {
-	    try {
-	        return (Product) super.clone();
-	    } catch (CloneNotSupportedException e) {
-	        return new Product(this.productId, this.productName, this.size,this.price,this.hasExtras,this.isExtras);
-	    }
+		try {
+			return (Product) super.clone();
+		} catch (CloneNotSupportedException e) {
+			return new Product(this.productId, this.productName, this.size, this.price, this.hasExtras, this.isExtras,
+					this.isBeverage);
+		}
+	}
+
+	public boolean isBeverage() {
+		return isBeverage;
 	}
 
 }

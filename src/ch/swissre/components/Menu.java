@@ -15,14 +15,14 @@ public class Menu {
 
 	static {
 
-		Product product1 = new Product(1, "Coffee", "S", 2.50, true, false);
-		Product product2 = new Product(2, "Coffee", "M", 3.00, true, false);
-		Product product3 = new Product(3, "Coffee", "L", 3.50, true, false);
-		Product product4 = new Product(4, "Bacon Roll", "N/A", 4.50, false, false);
-		Product product5 = new Product(5, "Freshly squeezed orange", "0.25L", 3.95, false, false);
-		Product product6 = new Product(6, "Extra milk", "N/A", 0.30, false, true);
-		Product product7 = new Product(7, "Foamed milk", "N/A", 0.50, false, true);
-		Product product8 = new Product(8, "Special roast coffee", "N/A", 0.90, false, true);
+		Product product1 = new Product(1, "Coffee", "S", 2.50, true, false, true);
+		Product product2 = new Product(2, "Coffee", "M", 3.00, true, false, true);
+		Product product3 = new Product(3, "Coffee", "L", 3.50, true, false, true);
+		Product product4 = new Product(4, "Bacon Roll", "N/A", 4.50, false, false, false);
+		Product product5 = new Product(5, "Freshly squeezed orange", "0.25L", 3.95, false, false, true);
+		Product product6 = new Product(6, "Extra milk", "N/A", 0.30, false, true, true);
+		Product product7 = new Product(7, "Foamed milk", "N/A", 0.50, false, true, true);
+		Product product8 = new Product(8, "Special roast coffee", "N/A", 0.90, false, true, true);
 
 		setOfProducts = new Vector<Product>();
 		setOfProducts.add(product1);

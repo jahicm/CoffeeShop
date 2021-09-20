@@ -3,7 +3,9 @@ package ch.swissre.components;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
+import java.util.Set;
 
 public class Order {
 
@@ -90,8 +92,16 @@ public class Order {
 		return order;
 	}
 
+	public Set<Entry<Integer, OrderEntry>> getEntrySet() {
+		return order.entrySet();
+	}
+
 	public double getTotalOrderAmount() {
 		return totalOrderAmount;
+	}
+
+	public void setTotalOrderAmount(double totalOrderAmount) {
+		this.totalOrderAmount = totalOrderAmount;
 	}
 
 	public void cancelOrder() {
@@ -99,6 +109,11 @@ public class Order {
 		order.clear();
 		totalOrderAmount = 0;
 
+	}
+
+	public void setOrderEntry(OrderEntry orderEntry) {
+
+		this.order.put(OrderEntry.createOrderId(), orderEntry);
 	}
 
 }

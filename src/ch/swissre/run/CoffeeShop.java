@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import ch.swissre.components.BonusProgram;
 import ch.swissre.components.Menu;
 import ch.swissre.components.Order;
 import ch.swissre.components.OrderEntry;
@@ -18,6 +19,7 @@ public class CoffeeShop {
 	private static boolean status = true;
 	private static String choice;
 	private static DecimalFormat priceFormat = new DecimalFormat("0.00");
+	private static BonusProgram bonusProgram = new BonusProgram();
 
 	public static void main(String[] args) {
 
@@ -26,6 +28,7 @@ public class CoffeeShop {
 		Menu.displayMainMenu();
 
 		do {
+
 			System.out.print(
 					" Press A to add new item to order,ENTER to complete order, C to cancel order, E to exit program:");
 			choice = scanner.nextLine();
@@ -149,16 +152,29 @@ public class CoffeeShop {
 		try {
 
 			Map<Integer, OrderEntry> receipt = order.getOrder();
+			Scanner scanner = new Scanner(System.in);
 
 			if (receipt.size() == 0) {
 				throw new RuntimeException("**Order invalid, no items selected**");
 			}
-			System.out
-					.println("*****************************************RECEIPT***************************************");
-			System.out.printf("%-30s%-10s%-10s%-30s\n", "PRODUCT", "TYPE", "QUANTITY", "AMOUNT");
+
+			System.out.print(
+					"Enter StampCard ID  and hit ENTER (if new customer provide new ID or just hit key ENTER to ignore:");
+			String stampCardId = scanner.nextLine().trim();
+			bonusProgram.provideExtrasFree(order);
+			if (!stampCardId.equals("")) {
+				checkBonusProgram(stampCardId, order);
+
+			}
+
 			System.out
 					.println("***************************************************************************************");
-			receipt.forEach((k, v) -> System.out.printf("%-30s%-10s%-10s%-30s\n", v.getProduct().getProductName(),
+			System.out
+					.println("*****************************************RECEIPT***************************************");
+			System.out.printf("%-30s%-10s%-20s%-30s\n", "PRODUCT", "TYPE", "QUANTITY", "AMOUNT");
+			System.out
+					.println("***************************************************************************************");
+			receipt.forEach((k, v) -> System.out.printf("%-30s%-10s%-20s%-30s\n", v.getProduct().getProductName(),
 					v.getProduct().getSize(), v.getQuantity(), priceFormat.format(v.getAmount())));
 			System.out
 					.println("***************************************************************************************");
@@ -167,7 +183,8 @@ public class CoffeeShop {
 			System.out.println("Receipt ID :" + order.createReceiptId());
 			System.out
 					.println("***************************************************************************************");
-			status = false;
+
+			order.cancelOrder();
 
 		} catch (RuntimeException ex) {
 			System.out.println(ex.getMessage());
@@ -175,6 +192,20 @@ public class CoffeeShop {
 		} catch (Exception ex) {
 			System.out.println("**Exception while complete the order***");
 			Menu.displayMainMenu();
+		}
+	}
+
+	private static void checkBonusProgram(String stampCardId, Order order) {
+
+		int stampCardID = Integer.parseInt(stampCardId);
+
+		boolean cardId = bonusProgram.bonusCardIdExists(stampCardID);
+
+		if (cardId) {
+			bonusProgram.checkForBonus(stampCardID, order);
+		} else {
+			bonusProgram.createStampCard(stampCardID);
+			bonusProgram.checkForBonus(stampCardID, order);
 		}
 	}
 }

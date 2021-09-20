@@ -1,5 +1,6 @@
 package ch.swissre.components;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -18,7 +19,7 @@ class OrderTest {
 
 	@Test
 	void testExceptionValidateOrderId() {
-		Product product1 = new Product(1, "Coffee", "S", 2.50, true, false);
+		Product product1 = new Product(1, "Coffee", "S", 2.50, true, false, true);
 		assertThrows(IllegalArgumentException.class, () -> {
 			order.validateOrder(-1, 2, product1);
 		});
@@ -30,7 +31,7 @@ class OrderTest {
 
 	@Test
 	void testExceptionValidateOrderQuantity() {
-		Product product1 = new Product(1, "Coffee", "S", 2.50, true, false);
+		Product product1 = new Product(1, "Coffee", "S", 2.50, true, false, true);
 		assertThrows(IllegalArgumentException.class, () -> {
 			order.validateOrder(1, -2, product1);
 		});
@@ -51,9 +52,9 @@ class OrderTest {
 
 	@Test
 	void testOrderAmountCorrect() {
-		Product product1 = new Product(1, "Coffee", "S", 2.50, true, false);
-		Product product2 = new Product(2, "Coffee", "M", 3.00, true, false);
-		Product product3 = new Product(3, "Coffee", "L", 3.50, true, false);
+		Product product1 = new Product(1, "Coffee", "S", 2.50, true, false, true);
+		Product product2 = new Product(2, "Coffee", "M", 3.00, true, false, true);
+		Product product3 = new Product(3, "Coffee", "L", 3.50, true, false, true);
 		order.validateOrder(1, 2, product1);
 		order.validateOrder(2, 1, product2);
 		order.validateOrder(3, 2, product3);
@@ -64,8 +65,8 @@ class OrderTest {
 
 	@Test
 	void testExceptionValidateExtrasOrder() {
-		Product product6 = new Product(6, "Extra milk", "N/A", 0.30, false, true);
-		Product product7 = new Product(7, "Foamed milk", "N/A", 0.50, false, true);
+		Product product6 = new Product(6, "Extra milk", "N/A", 0.30, false, true, true);
+		Product product7 = new Product(7, "Foamed milk", "N/A", 0.50, false, true, true);
 		assertThrows(IllegalArgumentException.class, () -> {
 			order.validateExtrasOrder(5, product7, product6, 1);
 		});
@@ -74,5 +75,12 @@ class OrderTest {
 			order.validateExtrasOrder(9, product7, product6, 1);
 		});
 	}
+	@Test
+	void testCreateReceiptId()
+	{
+		int test = order.createReceiptId();
+		assertTrue(test>0);
+	}
+
 
 }
