@@ -12,3 +12,5 @@ Assuumptions:
 You need to go into src directory of the project : CoffeeShop\src>javac ch/swissre/run/CoffeeShop.java
 in order to compile it.
 Same for running: CoffeeShop\src>java ch/swissre/run/CoffeeShop
+
+Mirza Jahic
